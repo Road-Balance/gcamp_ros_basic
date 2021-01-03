@@ -3,14 +3,15 @@
 
   <!-- send urdf to param server -->
   <!-- xacro -->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find gcamp_gazebo)/urdf/rb_diff_wheel.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find gcamp_gazebo)/urdf/rb_diff_wheel.xacro'" />
   
   <!-- urdf or raw xml file -->
   <!-- <param name="robot_description" command="cat $(find museumGuide)/urdf_model/peoplebot.xml" /> -->
 
   <!-- Send fake joint values-->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+  </node>
   <!-- Send robot states to tf -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
 
