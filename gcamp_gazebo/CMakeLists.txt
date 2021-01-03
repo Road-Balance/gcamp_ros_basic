@@ -7,7 +7,9 @@ project(gcamp_gazebo)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+  rospy
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -100,8 +102,8 @@ find_package(catkin REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES gcamp_gazebo
-#  CATKIN_DEPENDS other_catkin_pkg
+#  LIBRARIES rosbots_description
+#  CATKIN_DEPENDS rospy
 #  DEPENDS system_lib
 )
 

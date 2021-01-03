@@ -12,7 +12,7 @@
 
   <arg name="world_name"   default="gcamp_world"/>
   <arg name="world_file" default="$(find gcamp_gazebo)/worlds/$(arg world_name).world"/>
-  <arg name="model_name"   default="rb_diff_wheel"/>
+  <arg name="model_name"   default="tinybot"/>
 
   <arg name="package_name"  default="gcamp_gazebo" />
   <arg name="path"   value="(find $(arg package_name))" />
@@ -20,7 +20,6 @@
   
   <!-- Launch other relevant files-->
   <include file="$(arg dollar)$(arg path)/launch/robot_description.launch"/>
-
 
   <!-- Launch Gazebo World -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -38,6 +37,6 @@
 
 
   <!--launch rviz-->
-  <node name="rviz" pkg="rviz" type="rviz" respawn="false"/>
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg dollar)$(arg path)/rviz/tinybot.rviz"/>
 
 </launch>

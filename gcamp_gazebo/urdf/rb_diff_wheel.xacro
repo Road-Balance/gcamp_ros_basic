@@ -15,7 +15,8 @@
   
   <!-- type proper dae file location for your robot -->
   <xacro:property name="lidar_dae_location" value="package://gcamp_gazebo/meshes/hokuyo.dae"/>
-  
+
+  <link name="robot_footprint"></link>
   <xacro:include filename="$(find gcamp_gazebo)/urdf/rb_diff_gazebo_plugin.xacro"/>
   
   <material name="blue">
@@ -47,7 +48,12 @@
     </inertial>
   </xacro:macro>
 
-  <link name="dummy"/>
+  <joint name="robot_footprint_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="robot_footprint"/>
+    <child link="base_footprint"/>
+  </joint>
+
   <link name="base_footprint">
     <xacro:box_inertia m="8" w="0.001" h="0.001" d="0.001"/>
     <visual>
@@ -58,10 +64,6 @@
         </geometry>
     </visual>
   </link>
-  <joint name="dummy_joint" type="fixed">
-     <parent link="dummy"/>
-     <child link="base_footprint"/>
-  </joint> 
  
   <link name="base_link">
     <xacro:box_inertia m="1" w="${base_len}" h="${base_width}" d="0.01"/>
@@ -207,10 +209,10 @@
   <joint name="camera_joint" type="fixed">
     <origin xyz="0.2 0 0" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="camera_link"/>
+    <child link="camera"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
   </joint>
-  <link name="camera_link"> 
+  <link name="camera"> 
     <visual name='camera_visual'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
