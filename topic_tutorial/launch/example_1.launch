@@ -1,5 +1,0 @@
-<launch>
-    <!-- launch first exmaple -->
-    <node pkg="topic_tutorial" type="example_1.py" name="DriveForward"  output="screen">
-    </node>
-</launch>

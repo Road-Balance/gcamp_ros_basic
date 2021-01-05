@@ -4,7 +4,7 @@ import time
 import rospy
 from geometry_msgs.msg import Twist
 
-rospy.init_node('DriveForward')
+rospy.init_node('drive_forward')
 pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1 )
 r = rospy.Rate(1)
 
