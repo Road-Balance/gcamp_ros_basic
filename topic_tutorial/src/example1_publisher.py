@@ -26,4 +26,5 @@ while not rospy.is_shutdown():
         rospy.logwarn(" 10 seconds left, Stop!! ")
         pub.publish(stop)
         break
+    r.sleep()
 
