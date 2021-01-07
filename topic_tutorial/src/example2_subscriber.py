@@ -14,13 +14,3 @@ rospy.loginfo("==== Laser Scan Subscriber node Started, move forward during 10 s
 rospy.init_node('laser_scan')
 sub = rospy.Subscriber('/scan', LaserScan, callback)
 rospy.spin()
-
-# rospy.spin() and rospy.sleep()
-
-# if case is 'spin_mode':
-#     rospy.spin()
-# elif case is 'sleep_mode':
-#     r = rospy.Rate(1)
-
-#     while not rospy.is_shutdown():
-#         r.sleep()
