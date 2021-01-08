@@ -1,0 +1,4 @@
+uint32 time_duration
+float64 angular_vel
+---
+bool success
