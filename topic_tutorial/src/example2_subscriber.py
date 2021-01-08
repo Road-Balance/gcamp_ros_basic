@@ -3,8 +3,6 @@
 import rospy
 from sensor_msgs.msg import LaserScan 
 
-case = 'spin_mode'
-
 def callback(data):
     # data.ranges
     print(data)
