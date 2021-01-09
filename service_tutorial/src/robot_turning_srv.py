@@ -15,7 +15,7 @@ def callback(request):
     start_time = time.time()
 
     print('\nRobot Turning...')
-    while time.time() - start_time < 10.0:
+    while time.time() - start_time < request.time_duration:
         velocity_publisher.publish(cmd_vel)
     
     print("Done ...")
