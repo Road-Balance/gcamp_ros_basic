@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="actions_tutorial" type=".py" name="" output="screen" />
+</launch>
