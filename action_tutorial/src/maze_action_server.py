@@ -12,12 +12,10 @@ from sensor_msgs.msg import LaserScan
 from action_tutorial.msg import MazeAction, MazeFeedback, MazeResult
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
-UP = 0
-RIGHT = 1
-DOWN = 2
-LEFT = 3
+# TODO: Check gazebo simulation again, then modify more readable
+direction_dict = { 0: 0, 1: -90, 2: 180, 3: 90 }
 
-class MazeAction(object):
+class MazeActionClass(object):
 
     _feedback = MazeFeedback()
     _result = MazeResult()
@@ -35,7 +33,6 @@ class MazeAction(object):
     _turn_cmd = Twist()
 
     def __init__(self, name):
-        print('MazeAction Constructor')
         self._action_name = name
         self._yaw = 0.0
         self._scan = []
@@ -44,10 +41,12 @@ class MazeAction(object):
         self._cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
         self._odom_sub = rospy.Subscriber ('/odom', Odometry, self.odom_callback)
         self._scan_sub = rospy.Subscriber("/scan", LaserScan, self.scan_calback )
-        # self._action_server = actionlib.SimpleActionServer(self._action_name, MazeAction, execute_cb=self.ac_callback)
-        # self._action_server.start()
+        self._action_server = actionlib.SimpleActionServer(self._action_name, MazeAction, execute_cb=self.ac_callback, auto_start = False)
+        self._action_server.start()
 
         self._rate = rospy.Rate(5)
+
+        print('==== MazeActionClass Constructed ====')
 
     def scan_calback(self, data):
         self._scan = data.ranges
@@ -60,28 +59,11 @@ class MazeAction(object):
     def robot_go_forward(self):
         self._rate.sleep()
         
-        while self._scan[360] > 1.0:
+        while self._scan[360] > 0.9:
             self._cmd_pub.publish(self._go_forward)        
         self._cmd_pub.publish(self._stop)
 
-    def robot_turn_direction(self, direction_in):
-        direction_offset = direction_in - self._current_direction
-        turn_sign = (-1 if direction_offset < 0 else 1)
-
-        direction_offset *= turn_sign
-        self._turn_cmd.angular.z = self._turning_vel * turn_sign
-
-        print(direction_offset, turn_sign, self._turn_cmd)
-
-        for i in range(direction_offset):
-            start_time = time.time()
-            while time.time() - start_time < self._turning_time:
-                self._cmd_pub.publish(self._turn_cmd)
-            self._cmd_pub.publish(self._stop)
-
-        self._current_direction = direction_in
-
-    def robot_turn_euler(self, euler_angle):
+    def robot_turn(self, euler_angle):
         target_rad = euler_angle * math.pi / 180
 
         print('target_rad : ', target_rad)
@@ -95,30 +77,29 @@ class MazeAction(object):
             self._turn_cmd.angular.z = turn_offset
             self._cmd_pub.publish(self._turn_cmd)
             
-            print("yaw / turn_offset : ", self._yaw, turn_offset)
-        
         self._cmd_pub.publish(self._stop)
 
     def ac_callback(self, goal):
         success = True
-
-        rospy.loginfo('==== Maze Action Server Executing ====')
+        print('==== Maze Action Server Executing ====')
 
         for i, val in enumerate(goal.turning_sequence):
             # check that preempt has not been requested by the client
-            if self._as.is_preempt_requested():
-                rospy.loginfo('%s: Preempted' % self._action_name)
-                self._as.set_preempted()
+            if self._action_server.is_preempt_requested():
+                rospy.logwarn('%s: Preempted' % self._action_name)
+                self._action_server.set_preempted()
                 success = False
                 break
-                
+            
+            self.robot_turn(direction_dict[val])
+            self.robot_go_forward()
 
             self._rate.sleep()
 
         if success:
             self._result.success = True
-            rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._as.set_succeeded(self._result)
+            rospy.loginfo('Action Name : %s , Succeeded' % self._action_name)
+            self._action_server.set_succeeded(self._result)
 
     @property
     def scan(self):
@@ -130,9 +111,11 @@ class MazeAction(object):
 
 if __name__ == '__main__':
     rospy.init_node('maze_action')
-    server = MazeAction(rospy.get_name())
-
-    server.robot_turn(0)
+    server = MazeActionClass('maze_action')
+    rospy.spin()
+    # server.robot_go_forward()
+    # server.robot_turn(direction_dict[2])
+    # server.robot_go_forward()
 
     # while not rospy.is_shutdown():
     #     server.robot_go_forward()
