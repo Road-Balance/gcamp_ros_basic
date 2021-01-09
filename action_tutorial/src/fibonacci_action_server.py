@@ -1,6 +1,8 @@
 '''
-reference from ros wiki
-http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29
+example code for basic rospy action server
+
+referenced from ros wiki
+url : http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29
 '''
 
 #! /usr/bin/env python

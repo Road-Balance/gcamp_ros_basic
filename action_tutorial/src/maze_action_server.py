@@ -1,5 +1,12 @@
 #! /usr/bin/env python
 
+"""
+action client node for maze gazebo example
+
+created by kimsooyoung : https://github.com/kimsooyoung
+"""
+
+
 import math
 import time
 import rospy
@@ -47,6 +54,7 @@ class MazeActionClass(object):
         self._rate = rospy.Rate(5)
 
         print('==== MazeActionClass Constructed ====')
+        print('==== Waiting for Client Goal...  ====')
 
     def scan_calback(self, data):
         self._scan = data.ranges
@@ -65,8 +73,6 @@ class MazeActionClass(object):
 
     def robot_turn(self, euler_angle):
         target_rad = euler_angle * math.pi / 180
-
-        print('target_rad : ', target_rad)
 
         turn_offset = 100
         self._rate.sleep()
@@ -91,11 +97,19 @@ class MazeActionClass(object):
                 success = False
                 break
             
+            self._feedback.feedback_msg = "Turning " + ""
+            self._action_server.publish_feedback(self._feedback)
+
+            print('Turning Sequence : ' +  str(val))
             self.robot_turn(direction_dict[val])
+
+            self._feedback.feedback_msg = "Moving Forward ..."
+            self._action_server.publish_feedback(self._feedback)
             self.robot_go_forward()
 
             self._rate.sleep()
 
+        # TODO: success condition => goal sign
         if success:
             self._result.success = True
             rospy.loginfo('Action Name : %s , Succeeded' % self._action_name)
@@ -110,8 +124,8 @@ class MazeActionClass(object):
         return self._yaw
 
 if __name__ == '__main__':
-    rospy.init_node('maze_action')
-    server = MazeActionClass('maze_action')
+    rospy.init_node('maze_action_server')
+    server = MazeActionClass('maze_action_server')
     rospy.spin()
     # server.robot_go_forward()
     # server.robot_turn(direction_dict[2])
