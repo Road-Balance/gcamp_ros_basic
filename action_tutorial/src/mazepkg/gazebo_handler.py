@@ -70,4 +70,4 @@ def GazeboDeleteModel(name):
     print(result.status_message)
 
 
-rospy.init_node("gazebo_spawn_handler")
+# rospy.init_node("gazebo_spawn_handler")
