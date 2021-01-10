@@ -79,3 +79,28 @@ def GazeboResetSimulation():
     rospy.loginfo('Gazebo Simulation Reset')
 
 # rospy.init_node("gazebo_spawn_handler")
+
+
+# TODO: Respawn robot model
+# rosservice call /gazebo/set_model_state "model_state:
+#   model_name: 'tinybot'
+#   pose:
+#     position:
+#       x: 0.0
+#       y: 0.0
+#       z: 0.5
+#     orientation:
+#       x: 0.0
+#       y: 0.0
+#       z: -0.707
+#       w: 0.707 
+#   twist:
+#     linear:
+#       x: 0.0
+#       y: 0.0
+#       z: 0.0
+#     angular:
+#       x: 0.0
+#       y: 0.0
+#       z: 0.0
+#   reference_frame: 'world'" 
