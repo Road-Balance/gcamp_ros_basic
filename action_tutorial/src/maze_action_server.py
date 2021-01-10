@@ -14,6 +14,7 @@ import actionlib
 
 from mazepkg.basic_cmd_vel import GoForward, Stop, Turn
 from mazepkg.gazebo_handler import GazeboSpawnModel, GazeboDeleteModel
+from mazepkg.image_converter import ImageConverter
 
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
@@ -39,7 +40,7 @@ class MazeActionClass(object):
         self._cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
         self._odom_sub = rospy.Subscriber ('/odom', Odometry, self.odom_callback)
         self._scan_sub = rospy.Subscriber('/scan', LaserScan, self.scan_calback )
-        self._image_sub = rospy.Subscriber('')
+        # self._image_sub = rospy.Subscriber('')
         self._action_server = actionlib.SimpleActionServer(self._action_name, MazeAction, execute_cb=self.ac_callback, auto_start = False)
         self._action_server.start()
 
@@ -103,9 +104,19 @@ class MazeActionClass(object):
 
         # TODO: success condition => goal sign
         if success:
-            # 
-            self._result.success = True
-            rospy.loginfo('Action Name : %s , Succeeded' % self._action_name)
+            ic = ImageConverter()
+            center_pixel =  ic.center_pixel
+
+            if sum(center_pixel) < 300 and center_pixel[1] > 100:
+                self._result.success = True
+                rospy.loginfo('Maze Escape Succeeded')
+            else:
+                self._result.success = False
+                rospy.logerr('Maze Escape Failed')
+
+
+                
+
             self._action_server.set_succeeded(self._result)
 
     @property
