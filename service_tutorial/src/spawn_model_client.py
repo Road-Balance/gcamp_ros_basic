@@ -1,5 +1,11 @@
 #! /usr/bin/env python
 
+"""
+referenced from programcreek
+
+url : https://www.programcreek.com/python/example/93572/rospkg.RosPack
+"""
+
 import rospy
 import rospkg
 from geometry_msgs.msg import Pose

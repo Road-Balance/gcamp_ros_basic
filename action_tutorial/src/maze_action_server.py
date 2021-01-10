@@ -13,7 +13,7 @@ import rospy
 import actionlib
 
 from mazepkg.basic_cmd_vel import GoForward, Stop, Turn
-from mazepkg.gazebo_handler import GazeboSpawnModel, GazeboDeleteModel
+from mazepkg.gazebo_handler import GazeboResetSimulation
 from mazepkg.image_converter import ImageConverter
 
 from nav_msgs.msg import Odometry
@@ -113,9 +113,7 @@ class MazeActionClass(object):
             else:
                 self._result.success = False
                 rospy.logerr('Maze Escape Failed')
-
-
-                
+                GazeboResetSimulation()
 
             self._action_server.set_succeeded(self._result)
 
