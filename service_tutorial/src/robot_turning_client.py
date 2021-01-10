@@ -17,7 +17,7 @@ while not rospy.is_shutdown():
         t = input('> Type turning time duration: ')
         vel = input('> Type turning angular velocity: ')
 
-        if vel > 1.5707:    
+        if vel > 1.5707:
             raise ArithmeticError("Velocity too high !!")
 
         request_msg.time_duration = t
