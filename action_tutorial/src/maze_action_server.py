@@ -12,6 +12,8 @@ import time
 import rospy
 import actionlib
 
+from mazepkg.basic_cmd_vel import GoForward, Stop, Turn
+
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
@@ -19,25 +21,13 @@ from sensor_msgs.msg import LaserScan
 from action_tutorial.msg import MazeAction, MazeFeedback, MazeResult
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
-# TODO: Check gazebo simulation again, then modify more readable
-direction_dict = { 0: 0, 1: -90, 2: 180, 3: 90 }
+direction_dict = { 0: -90, 1: 180, 2: 90, 3: 0 }
+direction_str_dict = { 0: 'Up', 1: 'Right', 2: 'Down', 3: 'Left' }
 
 class MazeActionClass(object):
 
     _feedback = MazeFeedback()
     _result = MazeResult()
-
-    # control command => TODO: make header 
-    _turning_time = 3.6
-    _turning_vel = 0.392675
-
-    _go_forward = Twist()
-    _go_forward.linear.x = 1.0
-
-    _stop = Twist()
-    _stop.linear.x = 0.0
-
-    _turn_cmd = Twist()
 
     def __init__(self, name):
         self._action_name = name
@@ -68,8 +58,8 @@ class MazeActionClass(object):
         self._rate.sleep()
         
         while self._scan[360] > 0.9:
-            self._cmd_pub.publish(self._go_forward)        
-        self._cmd_pub.publish(self._stop)
+            self._cmd_pub.publish(GoForward)     
+        self._cmd_pub.publish(Stop)
 
     def robot_turn(self, euler_angle):
         target_rad = euler_angle * math.pi / 180
@@ -80,10 +70,10 @@ class MazeActionClass(object):
         while abs(turn_offset) > 0.005:
             turn_offset = 0.7 * (target_rad - self._yaw)
 
-            self._turn_cmd.angular.z = turn_offset
-            self._cmd_pub.publish(self._turn_cmd)
+            Turn.angular.z = turn_offset
+            self._cmd_pub.publish(Turn)
             
-        self._cmd_pub.publish(self._stop)
+        self._cmd_pub.publish(Stop)
 
     def ac_callback(self, goal):
         success = True
@@ -97,7 +87,7 @@ class MazeActionClass(object):
                 success = False
                 break
             
-            self._feedback.feedback_msg = "Turning " + ""
+            self._feedback.feedback_msg = "Turning to " + direction_str_dict[val]
             self._action_server.publish_feedback(self._feedback)
 
             print('Turning Sequence : ' +  str(val))
@@ -127,9 +117,3 @@ if __name__ == '__main__':
     rospy.init_node('maze_action_server')
     server = MazeActionClass('maze_action_server')
     rospy.spin()
-    # server.robot_go_forward()
-    # server.robot_turn(direction_dict[2])
-    # server.robot_go_forward()
-
-    # while not rospy.is_shutdown():
-    #     server.robot_go_forward()
