@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 
-import math
 import rospy
 import rospkg
 from geometry_msgs.msg import Pose
