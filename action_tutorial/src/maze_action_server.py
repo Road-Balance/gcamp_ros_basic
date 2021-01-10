@@ -13,13 +13,14 @@ import rospy
 import actionlib
 
 from mazepkg.basic_cmd_vel import GoForward, Stop, Turn
+from mazepkg.gazebo_handler import GazeboSpawnModel, GazeboDeleteModel
 
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+from tf.transformations import euler_from_quaternion
 
 from action_tutorial.msg import MazeAction, MazeFeedback, MazeResult
-from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
 direction_dict = { 0: -90, 1: 180, 2: 90, 3: 0 }
 direction_str_dict = { 0: 'Up', 1: 'Right', 2: 'Down', 3: 'Left' }
@@ -37,7 +38,8 @@ class MazeActionClass(object):
 
         self._cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
         self._odom_sub = rospy.Subscriber ('/odom', Odometry, self.odom_callback)
-        self._scan_sub = rospy.Subscriber("/scan", LaserScan, self.scan_calback )
+        self._scan_sub = rospy.Subscriber('/scan', LaserScan, self.scan_calback )
+        self._image_sub = rospy.Subscriber('')
         self._action_server = actionlib.SimpleActionServer(self._action_name, MazeAction, execute_cb=self.ac_callback, auto_start = False)
         self._action_server.start()
 
@@ -101,6 +103,7 @@ class MazeActionClass(object):
 
         # TODO: success condition => goal sign
         if success:
+            # 
             self._result.success = True
             rospy.loginfo('Action Name : %s , Succeeded' % self._action_name)
             self._action_server.set_succeeded(self._result)
