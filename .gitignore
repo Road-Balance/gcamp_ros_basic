@@ -1,2 +1,5 @@
 .vscode/c_cpp_properties.json
 .vscode/settings.json
+action_tutorial/src/mazepkg/__init__.pyc
+action_tutorial/src/mazepkg/basic_cmd_vel.pyc
+action_tutorial/src/mazepkg/gazebo_handler.pyc
