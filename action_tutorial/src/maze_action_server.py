@@ -102,7 +102,6 @@ class MazeActionClass(object):
 
             self._rate.sleep()
 
-        # TODO: success condition => goal sign
         if success:
             ic = ImageConverter()
             center_pixel =  ic.center_pixel
@@ -113,7 +112,6 @@ class MazeActionClass(object):
             else:
                 self._result.success = False
                 rospy.logerr('Maze Escape Failed')
-                GazeboResetSimulation()
 
             self._action_server.set_succeeded(self._result)
 
