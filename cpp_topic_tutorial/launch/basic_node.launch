@@ -1,0 +1,5 @@
+<launch>
+    <!-- launch roscpp basic exmaple -->
+    <node pkg="cpp_topic_tutorial" type="basic_node" name="basic_node" output="screen">
+    </node>
+</launch>
