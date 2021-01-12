@@ -1,5 +1,5 @@
 <launch>
     <!-- launch first exmaple -->
-    <node pkg="topic_tutorial" type="example1_publisher.py" name="drive_forward"  output="screen">
+    <node pkg="topic_tutorial" type="cmdvel_pub.py" name="drive_forward"  output="screen">
     </node>
 </launch>

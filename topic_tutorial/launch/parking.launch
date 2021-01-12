@@ -1,5 +1,5 @@
 <launch>
-    <!-- launch first exmaple -->
+    <!-- launch robot parking exmaple -->
     <node pkg="topic_tutorial" type="parking.py" name="parking"  output="screen">
     </node>
 </launch>

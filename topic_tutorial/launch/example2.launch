@@ -1,5 +1,5 @@
 <launch>
-    <!-- launch first exmaple -->
-    <node pkg="topic_tutorial" type="example2_subscriber.py" name="laser_scan"  output="screen">
+    <!-- launch second exmaple -->
+    <node pkg="topic_tutorial" type="laser_sub.py" name="laser_scan"  output="screen">
     </node>
 </launch>
