@@ -9,6 +9,8 @@ project(cpp_topic_tutorial)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  geometry_msgs
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -132,6 +134,8 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(basic_node src/basic_node.cpp)
+add_executable(cmd_vel_pub_node src/cmdvel_pub.cpp)
+add_executable(laser_sub_node src/laser_sub.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -142,12 +146,19 @@ add_executable(basic_node src/basic_node.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(basic_node ${basic_node_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(cmd_vel_pub_node ${cmd_vel_pub_node_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(laser_sub_node ${laser_sub_node_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(basic_node
   ${catkin_LIBRARIES}
 )
-
+target_link_libraries(cmd_vel_pub_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(laser_sub_node
+  ${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############
