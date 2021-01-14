@@ -4,6 +4,7 @@ import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 
+
 def callback(data):
     laser_range = data.ranges
     cmd_vel = Twist()
@@ -27,4 +28,3 @@ pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
 sub = rospy.Subscriber("/scan", LaserScan, callback)
 
 rospy.spin()
-

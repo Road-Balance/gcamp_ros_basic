@@ -4,8 +4,8 @@ import time
 import rospy
 from geometry_msgs.msg import Twist
 
-rospy.init_node('drive_forward')
-pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1 )
+rospy.init_node("drive_forward")
+pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
 r = rospy.Rate(1)
 
 forward = Twist()
@@ -21,5 +21,3 @@ rospy.loginfo("==== Endless DriveForward node Started ====\n")
 
 while not rospy.is_shutdown():
     pub.publish(forward)
-
-
