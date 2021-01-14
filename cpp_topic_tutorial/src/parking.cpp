@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <iostream>
+#include <string>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/LaserScan.h>
 
@@ -10,10 +11,13 @@ private:
     ros::Publisher m_pub;
     ros::Subscriber m_sub;
 
+    std::string m_name;
     geometry_msgs::Twist m_cmd_vel;
 
 public:
-    TinyBot(){
+    TinyBot(const std::string &name_in = "my_tiny"){
+        m_name = name_in;
+
         ROS_INFO("Publisher and Subscriber initialized");
         m_pub = m_nh.advertise<geometry_msgs::Twist>("/cmd_vel", 5);
         m_sub = m_nh.subscribe("/scan", 1, &TinyBot::subCallback, this);
@@ -48,7 +52,7 @@ public:
 int main(int argv, char** argc) {
 
     ros::init(argv, argc, "parking_node");
-    TinyBot tinybot;
+    TinyBot tinybot("gcamp_robo");
     ros::spin();
 
     return 0;
