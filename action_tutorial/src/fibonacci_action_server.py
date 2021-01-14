@@ -1,56 +1,59 @@
 #! /usr/bin/env python
+
+"""
+Fibonacci Action Server
+
+referenced from wiki.ros.org
+
+url: http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29#Compiling
+"""
+
 import rospy
 import actionlib
 from actionlib_tutorials.msg import FibonacciFeedback, FibonacciResult, FibonacciAction
 
+_feedback = FibonacciFeedback()
+_result = FibonacciResult()
 
-class FibonacciActionClass(object):  # Be care for Naming
 
-    _feedback = FibonacciFeedback()
-    _result = FibonacciResult()
+def goal_callback(goal):
+    r = rospy.Rate(1)
+    success = True
 
-    def __init__(self):
-        self._as = actionlib.SimpleActionServer(
-            "fibonacci_action_server", FibonacciAction, self.goal_callback, False
-        )
-        self._as.start()
+    _feedback.sequence = []
+    _feedback.sequence.append(0)
+    _feedback.sequence.append(1)
 
-        print("==== Fibonacci Action Class Constructed ====")
-        print("==== Waiting for Client Goal...  ====")
+    rospy.loginfo(
+        "Fibonacci Action Server Executing, creating fibonacci sequence of order %i with seeds %i, %i"
+        % (goal.order, _feedback.sequence[0], _feedback.sequence[1])
+    )
 
-    def goal_callback(self, goal):
-        r = rospy.Rate(1)
-        success = True
+    for i in range(1, goal.order):
+        if _as.is_preempt_requested():
+            rospy.loginfo("The goal has been cancelled/preempted")
+            _as.set_preempted()
+            success = False
+            break
 
-        self._feedback.sequence = []
-        self._feedback.sequence.append(0)
-        self._feedback.sequence.append(1)
+        _feedback.sequence.append(_feedback.sequence[i] + _feedback.sequence[i - 1])
+        _as.publish_feedback(_feedback)
+        r.sleep()
 
-        rospy.loginfo(
-            "Fibonacci Action Server Executing, creating fibonacci sequence of order %i with seeds %i, %i"
-            % (goal.order, self._feedback.sequence[0], self._feedback.sequence[1])
-        )
-
-        for i in range(1, goal.order):
-            if self._as.is_preempt_requested():
-                rospy.loginfo("The goal has been cancelled/preempted")
-                self._as.set_preempted()
-                success = False
-                break
-
-            self._feedback.sequence.append(
-                self._feedback.sequence[i] + self._feedback.sequence[i - 1]
-            )
-            self._as.publish_feedback(self._feedback)
-            r.sleep()
-
-        if success:
-            self._result.sequence = self._feedback.sequence
-            rospy.loginfo("Succeeded calculating the Fibonacci")
-            self._as.set_succeeded(self._result)
+    if success:
+        _result.sequence = _feedback.sequence
+        rospy.loginfo("Succeeded calculating the Fibonacci")
+        _as.set_succeeded(_result)
 
 
 if __name__ == "__main__":
     rospy.init_node("fibonacci")
-    FibonacciActionClass()
+
+    _as = actionlib.SimpleActionServer(
+        "fibonacci_action_server", FibonacciAction, goal_callback, False
+    )
+    _as.start()
+
+    print("==== Waiting for Client Goal...  ====")
+
     rospy.spin()
