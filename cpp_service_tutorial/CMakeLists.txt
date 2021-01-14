@@ -134,6 +134,8 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(spawn_model_client src/spawn_model_client.cpp)
+add_executable(robot_turning_server src/robot_turning_srv.cpp)
+add_executable(robot_turning_client src/robot_turning_client.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -144,9 +146,17 @@ add_executable(spawn_model_client src/spawn_model_client.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(spawn_model_client ${spawn_model_client_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(robot_turning_server ${robot_turning_server_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(robot_turning_client ${robot_turning_client_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(spawn_model_client
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(robot_turning_server
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(robot_turning_client
   ${catkin_LIBRARIES}
 )
 

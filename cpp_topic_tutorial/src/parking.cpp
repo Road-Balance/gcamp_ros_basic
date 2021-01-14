@@ -15,9 +15,7 @@ private:
     geometry_msgs::Twist m_cmd_vel;
 
 public:
-    TinyBot(const std::string &name_in = "my_tiny"){
-        m_name = name_in;
-
+    TinyBot(const std::string &name_in = "my_tiny"): m_name(name_in) {
         ROS_INFO("Publisher and Subscriber initialized");
         m_pub = m_nh.advertise<geometry_msgs::Twist>("/cmd_vel", 5);
         m_sub = m_nh.subscribe("/scan", 1, &TinyBot::subCallback, this);
