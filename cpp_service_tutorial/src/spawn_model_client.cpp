@@ -46,6 +46,7 @@ int main(int argc, char** argv){
     
     gazebo_msgs::SpawnModel model;
 
+    // add roslib in find_package()
     auto file_path = ros::package::getPath("cpp_service_tutorial") +  "/models/r2d2.urdf";
 
     addXml(model, file_path);
