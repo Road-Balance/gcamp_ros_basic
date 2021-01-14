@@ -31,28 +31,30 @@ class ActionState(IntEnum):
     RECALLED = 8
     LOST = 9
 
+
 def fb_callback(feedback):
     print(feedback)
 
-action_server_name = '/maze_action_server'
-rospy.init_node('maze_action_client')
+
+action_server_name = "/maze_action_server"
+rospy.init_node("maze_action_client")
 action_client = actionlib.SimpleActionClient(action_server_name, MazeAction)
 
-rospy.loginfo('Action Server Found...'+ action_server_name)
+rospy.loginfo("Action Server Found..." + action_server_name)
 
 goal = MazeGoal()
-user_list = [] 
+user_list = []
 
 
-# try block to handle the exception 
-try: 
-    print('Enter numbers [or stop] : ')
-    
-    while True: 
-        user_list.append(int(input())) 
-# if the input is not-integer, just print the list 
+# try block to handle the exception
+try:
+    print("Enter numbers [or stop] : ")
+
+    while True:
+        user_list.append(int(input()))
+# if the input is not-integer, just print the list
 except:
-    print('Your sequence list : ', user_list)
+    print("Your sequence list : ", user_list)
 
 goal.turning_sequence = user_list
 
@@ -60,7 +62,7 @@ action_client.send_goal(goal, feedback_cb=fb_callback)
 state_result = action_client.get_state()
 
 rate = rospy.Rate(1)
-rospy.loginfo('State Result from Server : ' + str(state_result))
+rospy.loginfo("State Result from Server : " + str(state_result))
 
 while state_result < ActionState.PREEMPTED:
     # Doing Stuff while waiting for the Server to give a result....
@@ -68,6 +70,6 @@ while state_result < ActionState.PREEMPTED:
     state_result = action_client.get_state()
 
 if state_result == ActionState.SUCCEEDED:
-    rospy.loginfo('Action Done State Result : '+ str(state_result))
+    rospy.loginfo("Action Done State Result : " + str(state_result))
 else:
-    rospy.logwarn('Something went wrong, result state : ' + str(state_result))
+    rospy.logwarn("Something went wrong, result state : " + str(state_result))

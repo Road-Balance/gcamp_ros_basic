@@ -7,15 +7,16 @@ import cv2
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
 
+
 class ImageConverter:
     def __init__(self):
         # self.image_pub = rospy.Publisher("image_topic_2", Image, queue_size=1)
 
         self._center_pixel = []
         self._bridge = CvBridge()
-        self._image_sub = rospy.Subscriber('camera/rgb/image_raw', Image, self.callback)
+        self._image_sub = rospy.Subscriber("camera/rgb/image_raw", Image, self.callback)
 
-    def callback(self,data):
+    def callback(self, data):
         try:
             cv_image = self._bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:

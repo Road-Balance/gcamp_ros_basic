@@ -23,8 +23,9 @@ from tf.transformations import euler_from_quaternion
 
 from action_tutorial.msg import MazeAction, MazeFeedback, MazeResult
 
-direction_dict = { 0: -90, 1: 180, 2: 90, 3: 0 }
-direction_str_dict = { 0: 'Up', 1: 'Right', 2: 'Down', 3: 'Left' }
+direction_dict = {0: -90, 1: 180, 2: 90, 3: 0}
+direction_str_dict = {0: "Up", 1: "Right", 2: "Down", 3: "Left"}
+
 
 class MazeActionClass(object):
 
@@ -35,33 +36,40 @@ class MazeActionClass(object):
         self._action_name = name
         self._yaw = 0.0
         self._scan = []
-        self._current_direction = 3 # 0 1 2 3
+        self._current_direction = 3  # 0 1 2 3
 
-        self._cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
-        self._odom_sub = rospy.Subscriber ('/odom', Odometry, self.odom_callback)
-        self._scan_sub = rospy.Subscriber('/scan', LaserScan, self.scan_calback )
+        self._cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
+        self._odom_sub = rospy.Subscriber("/odom", Odometry, self.odom_callback)
+        self._scan_sub = rospy.Subscriber("/scan", LaserScan, self.scan_calback)
         # self._image_sub = rospy.Subscriber('')
-        self._action_server = actionlib.SimpleActionServer(self._action_name, MazeAction, execute_cb=self.ac_callback, auto_start = False)
+        self._action_server = actionlib.SimpleActionServer(
+            self._action_name, MazeAction, execute_cb=self.ac_callback, auto_start=False
+        )
         self._action_server.start()
 
         self._rate = rospy.Rate(5)
 
-        print('==== MazeActionClass Constructed ====')
-        print('==== Waiting for Client Goal...  ====')
+        print("==== MazeActionClass Constructed ====")
+        print("==== Waiting for Client Goal...  ====")
 
     def scan_calback(self, data):
         self._scan = data.ranges
 
-    def odom_callback (self, data):
+    def odom_callback(self, data):
         orientation_q = data.pose.pose.orientation
-        orientation_list = [orientation_q.x, orientation_q.y, orientation_q.z, orientation_q.w]
+        orientation_list = [
+            orientation_q.x,
+            orientation_q.y,
+            orientation_q.z,
+            orientation_q.w,
+        ]
         _, _, self._yaw = euler_from_quaternion(orientation_list)
 
     def robot_go_forward(self):
         self._rate.sleep()
-        
+
         while self._scan[360] > 0.9:
-            self._cmd_pub.publish(GoForward)     
+            self._cmd_pub.publish(GoForward)
         self._cmd_pub.publish(Stop)
 
     def robot_turn(self, euler_angle):
@@ -75,25 +83,25 @@ class MazeActionClass(object):
 
             Turn.angular.z = turn_offset
             self._cmd_pub.publish(Turn)
-            
+
         self._cmd_pub.publish(Stop)
 
     def ac_callback(self, goal):
         success = True
-        print('==== Maze Action Server Executing ====')
+        print("==== Maze Action Server Executing ====")
 
         for i, val in enumerate(goal.turning_sequence):
             # check that preempt has not been requested by the client
             if self._action_server.is_preempt_requested():
-                rospy.logwarn('%s: Preempted' % self._action_name)
+                rospy.logwarn("%s: Preempted" % self._action_name)
                 self._action_server.set_preempted()
                 success = False
                 break
-            
+
             self._feedback.feedback_msg = "Turning to " + direction_str_dict[val]
             self._action_server.publish_feedback(self._feedback)
 
-            print('Turning Sequence : ' +  str(val))
+            print("Turning Sequence : " + str(val))
             self.robot_turn(direction_dict[val])
 
             self._feedback.feedback_msg = "Moving Forward ..."
@@ -104,14 +112,14 @@ class MazeActionClass(object):
 
         if success:
             ic = ImageConverter()
-            center_pixel =  ic.center_pixel
+            center_pixel = ic.center_pixel
 
             if sum(center_pixel) < 300 and center_pixel[1] > 100:
                 self._result.success = True
-                rospy.loginfo('Maze Escape Succeeded')
+                rospy.loginfo("Maze Escape Succeeded")
             else:
                 self._result.success = False
-                rospy.logerr('Maze Escape Failed')
+                rospy.logerr("Maze Escape Failed")
 
             self._action_server.set_succeeded(self._result)
 
@@ -123,7 +131,8 @@ class MazeActionClass(object):
     def yaw(self):
         return self._yaw
 
-if __name__ == '__main__':
-    rospy.init_node('maze_action_server')
-    server = MazeActionClass('maze_action_server')
+
+if __name__ == "__main__":
+    rospy.init_node("maze_action_server")
+    server = MazeActionClass("maze_action_server")
     rospy.spin()
