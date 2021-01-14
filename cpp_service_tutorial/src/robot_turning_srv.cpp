@@ -39,13 +39,21 @@ public:
         
         m_cmd_vel.angular.z = req.angular_vel;
 
-        ros::Time begin_time = ros::Time::now();
-        std::cout << int(req.time_duration) << std::endl;
-        ros::Duration duration = ros::Duration(int(req.time_duration));
-
         ROS_INFO("==== Start Turning ====");
-        m_vel_pub.publish(m_cmd_vel);
-        duration.sleep();
+
+        double timedelta;
+        clock_t start = clock();
+        clock_t end = clock();
+
+        timedelta = (double)(end - start) / CLOCKS_PER_SEC;
+
+        while (timedelta < req.time_duration){
+            m_vel_pub.publish(m_cmd_vel);
+            
+            end = clock();
+            timedelta = (double)(end - start) / CLOCKS_PER_SEC;
+        }
+
         // while ( ros::Time::now() < end_time ){
         //     // std::cout << ros::Time::now() << std::endl;
         //     m_vel_pub.publish(m_cmd_vel);
