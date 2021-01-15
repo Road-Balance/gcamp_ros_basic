@@ -19,7 +19,7 @@ from action_tutorial.msg import MazeAction, MazeGoal
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
 # For more detail, search actionlib_msgs/GoalStatus
-class ActionState(IntEnum):
+class ActionStatus(IntEnum):
     PENDING = 0
     ACTIVE = 1
     PREEMPTED = 2
@@ -64,12 +64,12 @@ state_result = action_client.get_state()
 rate = rospy.Rate(1)
 rospy.loginfo("State Result from Server : " + str(state_result))
 
-while state_result < ActionState.PREEMPTED:
+while state_result < ActionStatus.PREEMPTED:
     # Doing Stuff while waiting for the Server to give a result....
     rate.sleep()
     state_result = action_client.get_state()
 
-if state_result == ActionState.SUCCEEDED:
+if state_result == ActionStatus.SUCCEEDED:
     rospy.loginfo("Action Done State Result : " + str(state_result))
 else:
     rospy.logwarn("Something went wrong, result state : " + str(state_result))
