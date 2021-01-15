@@ -1,6 +1,8 @@
+// turn your robot with angular velocity
+// created by kimsooyoung : https://github.com/kimsooyoung
+
 #include <ros/ros.h>
 #include "cpp_service_tutorial/ControlTurningMessage.h"
-#include <iostream>
 
 typedef cpp_service_tutorial::ControlTurningMessage srv_t;
 
@@ -42,10 +44,10 @@ int main(int argc, char** argv) {
     if ( client.call(srv) ){
         auto response = srv.response;
         cout << std::boolalpha;
-        cout << "Response : " << response.success << endl;
+        cout << "Response : " << bool(response.success) << endl;
     }
     else {
-        ROS_ERROR("Failed to call service /trajectory_by_name");
+        ROS_ERROR("Failed to call service /control_robot_angle");
         return 1;      
     }
 

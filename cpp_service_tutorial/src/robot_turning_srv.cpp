@@ -2,8 +2,6 @@
 // url : https://answers.ros.org/question/214597/service-with-class-method/
 
 #include <ros/ros.h>
-#include <string>
-#include <time.h> 
 #include <geometry_msgs/Twist.h>
 #include "cpp_service_tutorial/ControlTurningMessage.h"
 
@@ -62,6 +60,10 @@ public:
         ROS_WARN("==== Stop Turning ====");
         m_cmd_vel.angular.z = 0;
         m_vel_pub.publish(m_cmd_vel);
+
+        res.success = true;
+        
+        return 1;
     }
 };
 

@@ -6,12 +6,12 @@
 // referenced from wiki.ros.org
 // url : http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 
+
+#include <fstream> // ros.h doesn't contain this lib
 #include <ros/ros.h>
 #include <ros/package.h>
 #include <gazebo_msgs/SpawnModel.h>
 #include <geometry_msgs/Pose.h>
-#include <iostream>
-#include <fstream>
 
 void addXml(gazebo_msgs::SpawnModel& model_in, const std::string& file_path ){
     std::ifstream file(file_path);
