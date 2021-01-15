@@ -1,5 +1,7 @@
-// #include <iostream>
-// #include <string>
+// Park your robot with lidar distance value
+// 
+// created by kimsooyoung : https://github.com/kimsooyoung
+
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/LaserScan.h>
@@ -24,6 +26,8 @@ public:
     void robotStop(){
         m_cmd_vel.linear.x = 0.0;
         m_pub.publish(m_cmd_vel);
+        ROS_INFO(" Parking Done!!"); 
+        ros::shutdown();
     }
 
     void robotGo(){
@@ -34,7 +38,6 @@ public:
     void subCallback(const sensor_msgs::LaserScan &data){
 
         auto frontLidarPoint = data.ranges[360];
-        std::cout << frontLidarPoint << std::endl;
 
         if ( frontLidarPoint >= 1.0 ){
             this->robotGo();
@@ -43,7 +46,7 @@ public:
             this->robotStop();
         }
 
-        ROS_INFO("===== front lidar point val : %f", frontLidarPoint);
+        std::cout << "===== front lidar point val : " << frontLidarPoint << " ====" << std::endl;
     }
 };
 

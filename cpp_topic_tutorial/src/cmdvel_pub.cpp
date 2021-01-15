@@ -1,4 +1,6 @@
-// #include <iostream>
+// basic topic publisher example
+// referenced from wiki.ros.org : http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29
+
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 
@@ -8,7 +10,7 @@ int main(int argc, char** argv){
     ros::NodeHandle nh;
     ROS_INFO("==== DriveForward node Started, move forward during 10 seconds ====\n");
 
-    ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 5);
+    ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 5);
     ros::Rate r(5);
 
     geometry_msgs::Twist go_forward;
@@ -17,23 +19,21 @@ int main(int argc, char** argv){
     geometry_msgs::Twist stop;
     stop.linear.x = 0.0;
 
-    ros::Time begin = ros::Time::now();
+    double timedelta;
+    clock_t start = clock();
+    clock_t end = clock();
 
-    while(ros::ok()) {
+    timedelta = (double)(end - start) / CLOCKS_PER_SEC;
 
-        ros::Time current = ros::Time::now();
-        ros::Duration duration = current - begin;
-
-        if (duration.sec >= 3.0){
-            ROS_INFO(" 3 seconds left, Stop!! \n");
-            pub.publish(stop);
-            break;
-        }
-
-        pub.publish(go_forward);
-        ros::spinOnce();
-        r.sleep();
+    while (timedelta < 10.0){
+        cmd_pub.publish(go_forward);
+        
+        end = clock();
+        timedelta = (double)(end - start) / CLOCKS_PER_SEC;
     }
+    
+    ROS_WARN(" 10 seconds passed, Stop!! \n");
+    cmd_pub.publish(stop);
 
     return 0;
 }

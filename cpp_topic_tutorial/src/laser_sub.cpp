@@ -1,4 +1,6 @@
-// #include <iostream>
+// basic topic subscriber example
+// referenced from wiki.ros.org : http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29
+
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 
