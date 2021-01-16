@@ -8,7 +8,7 @@ int main(int argc, char** argv){
 
     while ( ros::ok() ) {
         ROS_INFO("This is Basic Node");
-        ros::spinOnce();
+        // ros::spinOnce();
         r.sleep();
     }
 
