@@ -32,11 +32,11 @@ int main(int argc, char** argv) {
 
     cout << "Enter time_duration : ";
     cin >> time_duration;
-    cin.ignore(32767, '\n'); cin.clear();
+    cin.clear(); cin.ignore(32767, '\n'); 
 
     cout << "Enter angular_vel : ";
     cin >> angular_vel;
-    cin.ignore(32767, '\n'); cin.clear();
+    cin.clear(); cin.ignore(32767, '\n'); 
 
     srv.request.time_duration = time_duration;
     srv.request.angular_vel = angular_vel;
