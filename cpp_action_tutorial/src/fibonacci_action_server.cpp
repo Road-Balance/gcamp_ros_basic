@@ -1,16 +1,23 @@
-// fibonacci_client
-// fibonacci
-
-// not necessary
-// #include <string>
-// #include <boost>
-
-// referenced from wiki.ros.org 
-// url : http://wiki.ros.org/actionlib_tutorials/Tutorials/SimpleActionServer%28ExecuteCallbackMethod%29 
+/*
+ * referenced from wiki.ros.org 
+ * url : http://wiki.ros.org/actionlib_tutorials/Tutorials/SimpleActionServer%28ExecuteCallbackMethod%29 
+ */
 
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
 #include <actionlib_tutorials/FibonacciAction.h>
+
+/* Fibonacci.action
+* 
+* goal definition
+* int32 order
+* ---
+* result definition
+* int32[] sequence
+* ---
+* feedback
+* int32[] sequence
+*/ 
 
 class FibonacciActionClass {
 protected:
@@ -37,16 +44,6 @@ public:
 
     // must use Ptr type or ConstPtr type!!
     void actionCallback(const actionlib_tutorials::FibonacciGoalConstPtr &goal){
-        // Fibonacci.action
-        // 
-        // #goal definition
-        // int32 order
-        // ---
-        // #result definition
-        // int32[] sequence
-        // ---
-        // #feedback
-        // int32[] sequence
 
         ros::Rate r(5);
         bool success = true;

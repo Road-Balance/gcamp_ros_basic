@@ -1,5 +1,8 @@
-// referenced from answer.ros.org
-// url : https://answers.ros.org/question/214597/service-with-class-method/
+/*
+ * referenced from answer.ros.org
+ * 
+ * url : https://answers.ros.org/question/214597/service-with-class-method/
+ */
 
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>

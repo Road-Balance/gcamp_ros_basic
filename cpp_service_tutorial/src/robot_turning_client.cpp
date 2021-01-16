@@ -1,5 +1,8 @@
-// turn your robot with angular velocity
-// created by kimsooyoung : https://github.com/kimsooyoung
+/*
+ * turn your robot with angular velocity
+ * 
+ * created by kimsooyoung : https://github.com/kimsooyoung
+ */
 
 #include <ros/ros.h>
 #include "cpp_service_tutorial/ControlTurningMessage.h"

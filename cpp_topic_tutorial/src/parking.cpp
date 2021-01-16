@@ -1,6 +1,9 @@
-// Park your robot with lidar distance value
-// 
-// created by kimsooyoung : https://github.com/kimsooyoung
+/*
+ * Park your robot with lidar distance value
+ * 
+ * created by kimsooyoung : https://github.com/kimsooyoung
+ */
+
 
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>

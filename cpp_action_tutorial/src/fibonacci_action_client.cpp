@@ -1,20 +1,23 @@
-// referenced from wiki.ros.org 
-// url : http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Callback%20Based%20Simple%20Action%20Client
+/*
+ * referenced from wiki.ros.org 
+ * url : http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Callback%20Based%20Simple%20Action%20Client
+ */
 
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib_tutorials/FibonacciAction.h>
 
-// Fibonacci.action
-// 
-// #goal definition
-// int32 order
-// ---
-// #result definition
-// int32[] sequence
-// ---
-// #feedback
-// int32[] sequence
+/* Fibonacci.action
+* 
+* goal definition
+* int32 order
+* ---
+* result definition
+* int32[] sequence
+* ---
+* feedback
+* int32[] sequence
+*/ 
 
 void doneCb(const actionlib::SimpleClientGoalState& state,
             const actionlib_tutorials::FibonacciResultConstPtr& result)
