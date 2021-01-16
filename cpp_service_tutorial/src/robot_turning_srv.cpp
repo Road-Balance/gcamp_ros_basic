@@ -5,8 +5,8 @@
 #include <geometry_msgs/Twist.h>
 #include "cpp_service_tutorial/ControlTurningMessage.h"
 
-typedef cpp_service_tutorial::ControlTurningMessage::Request Request_T;
-typedef cpp_service_tutorial::ControlTurningMessage::Response Response_T;
+using Request_T = cpp_service_tutorial::ControlTurningMessage::Request;
+using Response_T = cpp_service_tutorial::ControlTurningMessage::Response;
 
 
 class TinyBot {
