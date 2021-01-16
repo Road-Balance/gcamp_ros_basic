@@ -4,7 +4,7 @@
 #include <ros/ros.h>
 #include "cpp_service_tutorial/ControlTurningMessage.h"
 
-typedef cpp_service_tutorial::ControlTurningMessage srv_t;
+using srv_t = cpp_service_tutorial::ControlTurningMessage srv_t;
 
 using std::cout;
 using std::endl;
