@@ -4,6 +4,7 @@
  * referenced from wiki.ros.org : http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29
  */
 
+#include <chrono>
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 
@@ -22,20 +23,20 @@ int main(int argc, char** argv){
     geometry_msgs::Twist stop;
     stop.linear.x = 0.0;
 
-    double timedelta;
-    clock_t start = clock();
-    clock_t end = clock();
+    auto start = std::chrono::steady_clock::now();
+    auto now = std::chrono::steady_clock::now();
 
-    timedelta = (double)(end - start) / CLOCKS_PER_SEC;
+    std::chrono::duration<double> time_duration = now - start;
 
-    while (timedelta < 10.0){
+
+    while (time_duration.count() < 5.0){
         cmd_pub.publish(go_forward);
         
-        end = clock();
-        timedelta = (double)(end - start) / CLOCKS_PER_SEC;
+        now = std::chrono::steady_clock::now();
+        time_duration = now - start;
     }
     
-    ROS_WARN(" 10 seconds passed, Stop!! \n");
+    ROS_WARN(" 5 seconds passed, Stop!! \n");
     cmd_pub.publish(stop);
 
     return 0;

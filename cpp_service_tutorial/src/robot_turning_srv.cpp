@@ -4,6 +4,7 @@
  * url : https://answers.ros.org/question/214597/service-with-class-method/
  */
 
+#include <chrono>
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include "cpp_service_tutorial/ControlTurningMessage.h"
@@ -30,29 +31,32 @@ public:
         ROS_INFO("Waiting for request...");
     }
 
-    // srv type
 
-    // uint32 time_duration
-    // float64 angular_vel
-    // ---
-    // bool success
+    /*
+    * srv type
+    * 
+    * uint32 time_duration
+    * float64 angular_vel
+    * ---
+    * bool success
+    */
+
     bool servCallback(Request_T &req, Response_T &res) {
         
         m_cmd_vel.angular.z = req.angular_vel;
 
         ROS_INFO("==== Start Turning ====");
 
-        double timedelta;
-        clock_t start = clock();
-        clock_t end = clock();
+        auto start = std::chrono::steady_clock::now();
+        auto now = std::chrono::steady_clock::now();
 
-        timedelta = (double)(end - start) / CLOCKS_PER_SEC;
+        std::chrono::duration<double> time_duration = now - start;
 
-        while (timedelta < req.time_duration){
+        while (time_duration.count() < req.time_duration){
             m_vel_pub.publish(m_cmd_vel);
             
-            end = clock();
-            timedelta = (double)(end - start) / CLOCKS_PER_SEC;
+            now = std::chrono::steady_clock::now();
+            time_duration = now - start;
         }
 
         // while ( ros::Time::now() < end_time ){
