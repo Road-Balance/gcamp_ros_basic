@@ -16,14 +16,14 @@ stop.linear.x = 0.0
 
 start_time = time.time()
 
-rospy.loginfo("==== DriveForward node Started, move forward during 10 seconds ====\n")
+rospy.loginfo("==== DriveForward node Started, move forward during 5 seconds ====\n")
 
 
 while not rospy.is_shutdown():
-    if time.time() - start_time < 10.0:
+    if time.time() - start_time < 5.0:
         pub.publish(forward)
     else:
-        rospy.logwarn(" 10 seconds left, Stop!! ")
+        rospy.logwarn(" 5 seconds left, Stop!! ")
         pub.publish(stop)
         break
     r.sleep()
