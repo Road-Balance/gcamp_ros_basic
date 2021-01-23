@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <launch>
     <!-- launch second exmaple -->
     <node pkg="topic_tutorial" type="laser_sub.py" name="laser_scan"  output="screen">
