@@ -30,7 +30,7 @@ def fb_callback(feedback):
 
 
 rospy.init_node("fibonacci_client")
-rate = rospy.Rate(1)
+rate = rospy.Rate(5)
 
 client = actionlib.SimpleActionClient("fibonacci_action_server", FibonacciAction)
 client.wait_for_server()
@@ -49,6 +49,7 @@ while state_result < PREEMPTED:
     state_result = client.get_state()
 
 if state_result == SUCCEEDED:
-    rospy.loginfo("Action Done State Result : " + str(state_result))
+    rospy.logwarn("Action Done Result : " + str(client.get_result()))
+
 else:
-    rospy.logwarn("Something went wrong, result state : " + str(state_result))
+    rospy.logerr("Something went wrong, result state : " + str(state_result))

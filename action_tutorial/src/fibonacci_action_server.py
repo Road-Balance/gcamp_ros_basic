@@ -12,21 +12,21 @@ import rospy
 import actionlib
 from actionlib_tutorials.msg import FibonacciFeedback, FibonacciResult, FibonacciAction
 
-_feedback = FibonacciFeedback()
-_result = FibonacciResult()
+g_feedback = FibonacciFeedback()
+g_result = FibonacciResult()
 
 
-def goal_callback(goal):
-    r = rospy.Rate(1)
+def execute_cb(goal):
+    r = rospy.Rate(5)
     success = True
 
-    _feedback.sequence = []
-    _feedback.sequence.append(0)
-    _feedback.sequence.append(1)
+    g_feedback.sequence = []
+    g_feedback.sequence.append(0)
+    g_feedback.sequence.append(1)
 
     rospy.loginfo(
         "Fibonacci Action Server Executing, creating fibonacci sequence of order %i with seeds %i, %i"
-        % (goal.order, _feedback.sequence[0], _feedback.sequence[1])
+        % (goal.order, g_feedback.sequence[0], g_feedback.sequence[1])
     )
 
     for i in range(1, goal.order):
@@ -36,24 +36,23 @@ def goal_callback(goal):
             success = False
             break
 
-        _feedback.sequence.append(_feedback.sequence[i] + _feedback.sequence[i - 1])
-        _as.publish_feedback(_feedback)
+        g_feedback.sequence.append(g_feedback.sequence[i] + g_feedback.sequence[i - 1])
+        _as.publish_feedback(g_feedback)
         r.sleep()
 
     if success:
-        _result.sequence = _feedback.sequence
+        g_result.sequence = g_feedback.sequence
         rospy.loginfo("Succeeded calculating the Fibonacci")
-        _as.set_succeeded(_result)
+        _as.set_succeeded(g_result)
 
 
-if __name__ == "__main__":
-    rospy.init_node("fibonacci")
+rospy.init_node("fibonacci")
 
-    _as = actionlib.SimpleActionServer(
-        "fibonacci_action_server", FibonacciAction, goal_callback, False
-    )
-    _as.start()
+_as = actionlib.SimpleActionServer(
+    "fibonacci_action_server", FibonacciAction, execute_cb, False
+)
+_as.start()
 
-    print("==== Waiting for Client Goal...  ====")
+print("==== Waiting for Client Goal...  ====")
 
-    rospy.spin()
+rospy.spin()
