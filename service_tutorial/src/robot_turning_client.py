@@ -18,7 +18,7 @@ rospy.loginfo("==== Robot Turning Server Started ====")
 rospy.wait_for_service("/control_robot_angle")
 service_client = rospy.ServiceProxy("/control_robot_angle", ControlTurningMessage)
 
-request_msg = ControlTurningMessageRequest()
+request_srv = ControlTurningMessageRequest()
 
 while not rospy.is_shutdown():
     try:
@@ -28,14 +28,14 @@ while not rospy.is_shutdown():
         if vel > 1.5707:
             raise ArithmeticError("Velocity too high !!")
 
-        request_msg.time_duration = t
-        request_msg.angular_vel = vel
+        request_srv.time_duration = t
+        request_srv.angular_vel = vel
         break
     except ArithmeticError as e:
         rospy.logerr(e)
     except Exception as e:
         rospy.logerr("Not a number type number plz !!")
 
-result = service_client(request_msg)
+result = service_client(request_srv)
 
 print(result)
