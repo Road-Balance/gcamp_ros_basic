@@ -1,5 +1,13 @@
 #! /usr/bin/env python
 
+"""
+basic rospy service example
+
+referenced from wiki.ros.org
+
+url : http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28python%29 
+"""
+
 import sys
 import rospy
 from service_tutorial.srv import ControlTurningMessage, ControlTurningMessageRequest
