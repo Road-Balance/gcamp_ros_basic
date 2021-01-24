@@ -1,5 +1,11 @@
 #! /usr/bin/env python
 
+"""
+Parking Assignment Answer
+
+Try it out!!
+"""
+
 import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist

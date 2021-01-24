@@ -1,5 +1,13 @@
 #! /usr/bin/env python
 
+"""
+2D Lidar Subscriber example
+
+referenced from wiki.ros.org
+
+url: http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29
+"""
+
 import rospy
 from sensor_msgs.msg import LaserScan
 

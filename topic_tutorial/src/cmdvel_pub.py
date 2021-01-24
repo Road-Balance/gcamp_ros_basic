@@ -1,5 +1,13 @@
 #! /usr/bin/env python
 
+"""
+Twist Publisher example
+
+referenced from wiki.ros.org
+
+url: http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29
+"""
+
 import time
 import rospy
 from geometry_msgs.msg import Twist

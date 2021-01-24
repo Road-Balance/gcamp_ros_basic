@@ -1,5 +1,9 @@
 #! /usr/bin/env python
 
+"""
+Endless Version of cmdvel_pub example
+"""
+
 import time
 import rospy
 from geometry_msgs.msg import Twist
