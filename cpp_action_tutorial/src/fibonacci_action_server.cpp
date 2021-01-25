@@ -47,7 +47,7 @@ public:
 
         ros::Rate r(5);
         bool success = true;
-        int order = int(goal->order);
+        auto order = goal->order;
         const auto sequence = &(m_feedback.sequence);
 
         // push_back the seeds for the fibonacci sequence
