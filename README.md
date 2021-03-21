@@ -11,6 +11,10 @@
 There's Lecture note for all codes, all packages (**Written in Korean**) 
 - [Lecture Note Notion Link](https://www.notion.so/ROS-for-G-Camp-410d95df137d403ca176cfec4822351a)
 
+There's Also Youtube Lectures for all about this repo (**Also spoken in Korean**) 
+- [Youtube Lecture Link](https://www.youtube.com/watch?v=j2kBX8G6-bY&list=PL403sAX76vtd8lcGsn9vH22aRXu7Vmf9G)
+
+
 ## Repo Structure
 
 ```
