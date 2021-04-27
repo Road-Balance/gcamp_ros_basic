@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot>
+
+  <gazebo reference="left_track">
+    <mu1>0.7</mu1>
+    <mu2>150</mu2>
+    <fdir1>0 1 0</fdir1>
+  </gazebo>
+
+  <gazebo reference="right_track">
+    <mu1>0.7</mu1>
+    <mu2>150</mu2>
+    <fdir1>0 1 0</fdir1>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <legacyMode>false</legacyMode>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>10</updateRate>
+      <leftJoint>left_track_fake</leftJoint>
+      <rightJoint>right_track_fake</rightJoint>
+      <wheelSeparation>0.4</wheelSeparation>
+      <wheelDiameter>0.18094</wheelDiameter>
+      <torque>10</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishWheelJointState>false</publishWheelJointState>
+      <rosDebugLevel>na</rosDebugLevel>
+      <wheelAcceleration>0</wheelAcceleration>
+      <wheelTorque>5</wheelTorque>
+      <odometrySource>world</odometrySource>
+      <publishTf>1</publishTf>
+      <publishOdomTF>true</publishOdomTF>
+    </plugin>
+  </gazebo>
+
+
+  <!-- <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo> -->
+
+  <!-- There aren't tracked vehicle plugin in gazebo_ros -->
+  <!-- <gazebo>
+    <plugin filename="libgazebo_ros_simple_tracked_vehicle.so" name="simple_tracked_vehicle">
+      <body>base_link</body>
+      <left_track>left_track</left_track>
+      <right_track>right_track</right_track>
+      <track_mu>2</track_mu>
+      <track_mu2>0.5</track_mu2>
+    </plugin>
+  </gazebo> -->
+
+</robot>

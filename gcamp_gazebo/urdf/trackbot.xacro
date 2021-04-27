@@ -1,0 +1,219 @@
+<?xml version='1.0'?>
+
+<robot name="trackbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find gcamp_gazebo)/urdf/trackbot.gazebo" />
+
+  <link name="base_footprint"></link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+
+  <link name='base_link'>
+    <pose frame=''>0 0 0 0 -0 0</pose>
+
+    <inertial>
+      <origin xyz="-0.122 0 0.118" rpy="1.5708 -0 0" />
+      <mass value="13.14" />
+      <inertia 
+        ixx="0.10019" ixy="0.0" ixz="0.0" 
+        iyy="0.345043" iyz="0.0" 
+        izz="0.302044" 
+      />
+    </inertial>
+
+    <collision name='base_link_collision'>
+      <origin xyz="-0.122 0 0.118" rpy="0 -0 0" />
+      <geometry>
+        <box size="0.50017 0.24093 0.139" />
+      </geometry>
+    </collision>
+
+    <visual name='base_link_visual'>
+      <origin xyz="-0.122 0 0.118" rpy="0 -0 0" />
+      <geometry>
+        <box size="0.50017 0.24093 0.139" />
+      </geometry>
+    </visual>
+  </link>
+
+    
+  <joint name='left_track_j' type='fixed'>
+    <parent link="base_link" />
+    <child link="left_track" />
+    <origin xyz="0 0.1985 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <link name='left_track'>
+    <!-- <pose frame=''> 0 -0 0</pose> -->
+    <inertial>
+      <origin xyz="0 0 0.0141" rpy="0 -0 0" />
+      <mass value="6.06"/>
+      <inertia 
+        ixx="0.002731" ixy="0.0" ixz="0.0" 
+        iyy="0.032554" iyz="1.5e-05" 
+        izz="0.031391" 
+      />
+    </inertial>
+
+    <collision name='left_track_collision'>
+      <origin xyz="0 0 0.01855" rpy="1.5708 -0 1.5708" />
+      <geometry>
+        <box size="0.09728 0.18094 0.5" />
+      </geometry>
+    </collision>
+
+    <!-- <collision name='left_track_collision_1'>
+      <origin xyz="0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </collision> -->
+
+    <collision name='left_track_collision_2'>
+      <origin xyz="-0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </collision>
+
+    <visual name='left_track_visual'>\
+      <origin xyz="0 0 0.01855" rpy="1.5708 -0 1.5708" />
+      <geometry>
+        <box size="0.09728 0.18094 0.5" />
+      </geometry>
+    </visual>
+
+    <visual name='left_track_visual_1'>\
+      <origin xyz="0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </visual>
+
+    <visual name='left_track_visual_2'>\
+      <origin xyz="-0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name='left_track_fake' type='fixed'>
+    <parent link="base_link" />
+    <child link="left_wheel" />
+    <origin xyz="0 0.1985 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>  
+
+  <link name='left_wheel'>
+    <inertial>
+      <origin xyz="0 0 0.0141" rpy="0 -0 0" />
+      <mass value="6.06"/>
+      <inertia 
+        ixx="0.002731" ixy="0.0" ixz="0.0" 
+        iyy="0.032554" iyz="1.5e-05" 
+        izz="0.031391" 
+      />
+    </inertial>
+
+    <collision name='left_track_collision_1'>
+      <origin xyz="0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name='right_track_j' type='fixed'>
+    <parent link="base_link" />
+    <child link="right_track" />
+    <origin xyz="0 -0.1985 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <link name='right_track'>
+    <inertial>
+      <origin xyz="0 0 0.0141" rpy="0 -0 0" />
+      <mass value="6.06"/>
+      <inertia 
+        ixx="0.002731" ixy="0.0" ixz="0.0" 
+        iyy="0.032554" iyz="1.5e-05" 
+        izz="0.031391" 
+      />
+    </inertial>
+
+    <collision name='right_track_collision'>
+      <origin xyz="0 0 0.01855" rpy="1.5708 -0 1.5708" />
+      <geometry>
+        <box size="0.09728 0.18094 0.5" />
+      </geometry>
+    </collision>
+
+    <!-- <collision name='right_track_collision_1'>
+      <origin xyz="0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </collision> -->
+
+    <collision name='right_track_collision_2'>
+      <origin xyz="-0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </collision>
+
+    <visual name='right_track_visual'>
+      <origin xyz="0 0 0.01855" rpy="1.5708 -0 1.5708" />
+      <geometry>
+        <box size="0.09728 0.18094 0.5" />
+      </geometry>
+    </visual>
+
+    <visual name='right_track_visual_1'>
+      <origin xyz="0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </visual>
+
+    <visual name='right_track_visual_2'>
+      <origin xyz="-0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name='right_track_fake' type='fixed'>
+    <parent link="base_link" />
+    <child link="right_wheel" />
+    <origin xyz="0 -0.1985 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>  
+
+  <link name='right_wheel'>
+    <inertial>
+      <origin xyz="0 0 0.0141" rpy="0 -0 0" />
+      <mass value="6.06"/>
+      <inertia 
+        ixx="0.002731" ixy="0.0" ixz="0.0" 
+        iyy="0.032554" iyz="1.5e-05" 
+        izz="0.031391" 
+      />
+    </inertial>
+
+    <collision name='right_track_collision_1'>
+      <origin xyz="0.25 0 0.01855" rpy="1.5708 -0 0" />
+      <geometry>
+        <cylinder length="0.09728" radius="0.09047" />
+      </geometry>
+    </collision>
+  </link>
+
+</robot>
