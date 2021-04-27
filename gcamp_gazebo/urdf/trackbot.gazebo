@@ -14,27 +14,23 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <legacyMode>false</legacyMode>
-      <alwaysOn>true</alwaysOn>
-      <updateRate>10</updateRate>
-      <leftJoint>left_track_fake</leftJoint>
-      <rightJoint>right_track_fake</rightJoint>
+    <plugin name='skid_steer_drive' filename='libgazebo_ros_skid_steer_drive.so'>
+      <updateRate>500</updateRate>
+
+      <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+      <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+      <leftRearJoint>back_left_wheel_joint</leftRearJoint>
+      <rightRearJoint>back_right_wheel_joint</rightRearJoint>
+
       <wheelSeparation>0.4</wheelSeparation>
-      <wheelDiameter>0.18094</wheelDiameter>
-      <torque>10</torque>
+      <wheelDiameter>0.2</wheelDiameter>
+
+      <torque>20</torque>
+
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
-      <publishWheelTF>false</publishWheelTF>
-      <publishWheelJointState>false</publishWheelJointState>
-      <rosDebugLevel>na</rosDebugLevel>
-      <wheelAcceleration>0</wheelAcceleration>
-      <wheelTorque>5</wheelTorque>
-      <odometrySource>world</odometrySource>
-      <publishTf>1</publishTf>
-      <publishOdomTF>true</publishOdomTF>
+      <broadcastTF>true</broadcastTF>
     </plugin>
   </gazebo>
 
