@@ -2,9 +2,8 @@
 
 <robot name="bocbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find gcamp_gazebo)/urdf/skidbot.gazebo" />
-
   <link name="robot_footprint"></link>
+  <xacro:include filename="$(find gcamp_gazebo)/urdf/skidbot.gazebo" />
 
   <joint name="robot_footprint_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
@@ -34,11 +33,11 @@
         <box size=".4 .2 .1" />
       </geometry>
     </visual>
-
   </link>
+
   <link name="front_left_wheel">
     <inertial>
-      <mass value="5.0" />
+      <mass value="8.0" />
       <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707" />
       <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
     </inertial>
@@ -60,7 +59,7 @@
 
   <link name="back_left_wheel">
     <inertial>
-      <mass value="5.0" />
+      <mass value="8.0" />
       <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707" />
       <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
     </inertial>
@@ -82,7 +81,7 @@
 
   <link name="front_right_wheel">
     <inertial>
-      <mass value="5.0" />
+      <mass value="8.0" />
       <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707" />
       <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
     </inertial>
@@ -104,7 +103,7 @@
 
   <link name="back_right_wheel">
     <inertial>
-      <mass value="5.0" />
+      <mass value="8.0" />
       <origin xyz="0.0 0 0" rpy=" 0 1.5707 1.5707" />
       <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
     </inertial>
@@ -176,7 +175,7 @@
     <parent link="chassis" />
     <axis xyz="0 1 0" rpy="0 0 0" />
     <limit effort="10000" velocity="1000" />
-    <dynamics damping="1.0" friction="1.0" />
+    <dynamics damping="1.0" friction="5.0" />
   </joint>
 
   <joint type="continuous" name="front_right_wheel_joint">
@@ -185,7 +184,7 @@
     <parent link="chassis" />
     <axis xyz="0 1 0" rpy="0 0 0" />
     <limit effort="10000" velocity="1000" />
-    <dynamics damping="1.0" friction="1.0" />
+    <dynamics damping="1.0" friction="5.0" />
   </joint>
 
   <joint type="continuous" name="back_left_wheel_joint">
@@ -194,7 +193,7 @@
     <parent link="chassis" />
     <axis xyz="0 1 0" rpy="0 0 0" />
     <limit effort="10000" velocity="1000" />
-    <dynamics damping="1.0" friction="1.0" />
+    <dynamics damping="1.0" friction="5.0" />
   </joint>
 
   <joint type="continuous" name="back_right_wheel_joint">
@@ -203,7 +202,7 @@
     <parent link="chassis" />
     <axis xyz="0 1 0" rpy="0 0 0" />
     <limit effort="10000" velocity="1000" />
-    <dynamics damping="1.0" friction="1.0" />
+    <dynamics damping="1.0" friction="5.0" />
   </joint>
 
   <joint type="fixed" name="camera_joint">
