@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!--skid_steer_drive_controller-->
+
+  <!-- ros1 -->
+  <plugin name='skid_steer_drive' filename='libgazebo_ros_skid_steer_drive.so'>
+    <updateRate>500</updateRate>
+
+    <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+    <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+    <leftRearJoint>back_left_wheel_joint</leftRearJoint>
+    <rightRearJoint>back_right_wheel_joint</rightRearJoint>
+
+    <wheelSeparation>0.4</wheelSeparation>
+    <wheelDiameter>0.2</wheelDiameter>
+
+    <torque>20</torque>
+
+    <commandTopic>cmd_demo</commandTopic>
+    <odometryTopic>odom_demo</odometryTopic>
+    <odometryFrame>odom_demo</odometryFrame>
+    <broadcastTF>true</broadcastTF>
+  </plugin>
+
+  <!-- ros2 -->
+  <!-- <gazebo>
+    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <ros>
+        <namespace>/bocbot</namespace>
+        <argument>/cmd_vel:=mr_cme_vel</argument>
+        <argument>/odom:=odom</argument>
+      </ros>
+      <update_rate>100.0</update_rate>
+      <num_wheel_pairs>2</num_wheel_pairs>
+      <odometry_frame>odom</odometry_frame>
+
+      <left_joint>front_left_wheel_joint</left_joint>
+      <left_joint>back_left_wheel_joint</left_joint>
+      <wheel_separation>0.4</wheel_separation>
+      <wheel_diameter>0.2</wheel_diameter>
+
+      <right_joint>front_right_wheel_joint</right_joint>
+      <right_joint>back_right_wheel_joint</right_joint>
+      <wheel_separation>0.4</wheel_separation>
+      <wheel_diameter>0.2</wheel_diameter>
+
+      <robot_base_frame>robot_footprint</robot_base_frame>
+      <max_wheel_torque>20</max_wheel_torque>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+
+      <odometry_source>world</odometry_source>
+    </plugin>
+  </gazebo> -->
+
+</robot>

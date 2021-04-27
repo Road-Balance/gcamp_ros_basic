@@ -11,11 +11,11 @@
 
   <arg name="world_name" default="tracked_vehicle_simple.world" />
   <arg name="world_file" default="$(find gcamp_gazebo)/worlds/$(arg world_name)" />
-  <arg name="model_name" default="trackbot" />
+  <arg name="model_name" default="skidbot" />
 
   <!-- send urdf to param server -->
   <!-- xacro -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find gcamp_gazebo)/urdf/trackbot.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find gcamp_gazebo)/urdf/skidbot.xacro'" />
 
   <!-- Send fake joint values-->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
@@ -30,7 +30,7 @@
     <arg name="use_sim_time" value="true" />
     <arg name="debug" value="false" />
     <arg name="gui" value="true" />
-    <arg name="world_name" value="$(arg world_file)" />
+    <!-- <arg name="world_name" value="$(arg world_file)" /> -->
   </include>
 
   <!-- Spawn My Robot -->
